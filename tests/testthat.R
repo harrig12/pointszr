@@ -1,6 +1,6 @@
 library(testthat)
-#library(<your package name>)
+library(pointszr)
 
-#test_check("<your package name>")
+test_check(pointszr)
 
 # [END]
