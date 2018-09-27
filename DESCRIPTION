@@ -1,12 +1,11 @@
-Package: rpt
+Package: pointszr
 Type: Package
-Title: R Package Template
+Title: Point Resizer in R
 Version: 0.1.0
-Author: Boris Steipe
-Maintainer: Boris Steipe <boris.steipe@utoronto.ca>
-Description: rpt contains an easy to adapt set of files for R package
-             development, loosely based on Hadley Wickham's
-             R-packages book.
+Author: Cait Harrigan
+Maintainer: Cait Harrigan <cait.harrigan@mail.utoronto.ca>
+Description: pointszr contains methods to easily modify point size 
+             in plots for easy data display and exploration. 
 License: file LICENSE
 Encoding: UTF-8
 LazyData: true

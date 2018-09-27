@@ -1,6 +1,6 @@
 library(testthat)
-library(rpt)
+library(pointszr)
 
-#test_check("rpt")
+test_check(pointszr)
 
 # [END]
