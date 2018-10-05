@@ -1,6 +1,6 @@
 # vplot.R
 
-#' \code{vplot} create a volcano plot with point size variation
+#' \code{vplot} create a volcano plot
 #'
 #' \code{vplot}
 #'
@@ -9,6 +9,7 @@
 #' @param method a string that selects the method to use when scaling point size
 #' @param colSig colour points based on significance. Red if padj<0.05, orange of log2FC>1, green if both. (from http://www.gettinggeneticsdone.com/2014/05/r-volcano-plots-to-visualize-rnaseq-microarray.html)
 #' @param ... arguments to pass to plot()
+#' @return returns the DESeqResults object that was used for plotting.
 #' @examples
 #' load(system.file("extdata/dev/exampleDDSresult.RData", package = "pointszr"))
 #' vplot(exDDSresult, main = "Example output for vplot()")
@@ -23,4 +24,5 @@ vplot <- function(DDSresult, szModifier, method, colSig=T, ...) {
   else{
     with(DDSresult, plot(log2FoldChange, -log10(pvalue), ...))
   }
+  return(DDSresult)
 }
