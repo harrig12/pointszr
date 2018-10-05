@@ -10,8 +10,8 @@
 #' @param colSig colour points based on significance. Red if padj<0.05, orange of log2FC>1, green if both. (from http://www.gettinggeneticsdone.com/2014/05/r-volcano-plots-to-visualize-rnaseq-microarray.html)
 #' @param ... arguments to pass to plot()
 #' @examples
-#' plot(c(0.1,10), c(0,1))
-#' abline(v = lseq(0.1, 10, length.out = 20), col="#3366FF66")
+#' load(system.file("extdata/dev/exampleDDSresult.RData", package = "pointszr"))
+#' vplot(exDDSresult, main = "Example output for vplot()")
 #' @export
 vplot <- function(DDSresult, szModifier, method, colSig=T, ...) {
   if(colSig == T){
