@@ -4,18 +4,15 @@
 \alias{overlay}
 \title{\code{overlay} create a layer on an existing volcano plot}
 \usage{
-overlay(DDSresult)
+overlay(DDSresult, szMod = 1, ...)
 }
 \arguments{
 \item{DDSresult}{a DESeqResults object}
+
+\item{szMod}{sizing modifier, a numerical vector to be applied to the elements of DDSResult. Vectors shorter than the axis they're being applied to will be recycled.}
+
+\item{...}{additional arguments to pass to points()}
 }
 \description{
 \code{overlay} should be executed after vplot(), and can be re-executed several times to build up layers on a plot.
-}
-\examples{
-load(system.file("extdata/dev/exampleDDSresult.RData", package = "pointszr"))
-vplot(exDDSresult, main = "Example output for vplot()")
-
-
-
 }

@@ -6,18 +6,17 @@
 #'
 #' @param DDSresult a DESeqResults object
 #' @param szMod sizing modifier, a numerical vector to be applied to the elements of DDSResult. Vectors shorter than the axis they're being applied to will be recycled.
-#' @param axis num, value either 1 for rows or 2 for columns. Indicated whether sizing modifier applies to rows or columns of DDSResult.
+#' @param ... additional arguments to pass to points()
 #'
-#'
+#' @example
+#' load(system.file("extdata/dev/exampleDDSresult.RData", package = "pointszr"))
+#' vplot(exDDSresult, main = "Example output for overlay()",
+#'                    colSig = F, cex = 0.5, pch = 20)
+#' overlay(subset(exDDSresult, -log10(pvalue) > 20), szMod = seq(0.8, 4, length.out=9), col = 2, pch = 20)
 #'
 #' @export
-overlay <- function(DDSresult, szMod, axis = 1, ...){
-  if(axis == (1|2)){
-    szMod <- rep_len(szMod, length.out = dim(DDSresult)[axis])
+overlay <- function(DDSresult, szMod = 1, ...){
+    szMod <- rep_len(szMod, length.out = dim(DDSresult)[1])
     with(DDSresult, points(log2FoldChange, -log10(pvalue),
                            cex=szMod, ...))
-  }
-  else {
-    stop("invalid value for axis. should be num 1 or 2")
-  }
 }

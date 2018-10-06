@@ -4,26 +4,20 @@
 \alias{vplot}
 \title{\code{vplot} create a volcano plot}
 \usage{
-vplot(DDSresult, szModifier, method, colSig = T, ...)
+vplot(DDSresult, pch = 20, cex = 0.5, ...)
 }
 \arguments{
 \item{DDSresult}{a DESeqResults object}
 
-\item{szModifier}{a vector containing the variable that point size is varied based on}
+\item{pch}{point style to be displayed. by default pch = 20.}
 
-\item{method}{a string that selects the method to use when scaling point size}
+\item{cex}{point size to be displayed. by default cex = 0.5}
 
-\item{colSig}{colour points based on significance. Red if padj<0.05, orange of log2FC>1, green if both. (from http://www.gettinggeneticsdone.com/2014/05/r-volcano-plots-to-visualize-rnaseq-microarray.html)}
-
-\item{...}{arguments to pass to plot()}
+\item{...}{additional arguments to pass to plot().}
 }
 \value{
 returns the DESeqResults object that was used for plotting.
 }
 \description{
 \code{vplot}
-}
-\examples{
-load(system.file("extdata/dev/exampleDDSresult.RData", package = "pointszr"))
-vplot(exDDSresult, main = "Example output for vplot()")
 }
