@@ -21,3 +21,12 @@ returns the DESeqResults object that was used for plotting.
 \description{
 \code{vplot}
 }
+\examples{
+library(DESeq2)
+simDDS <- DESeq(simDDS)
+res <- results(simDDS)
+
+}
+\seealso{
+DESeq2
+}

@@ -4,15 +4,24 @@
 \alias{overlay}
 \title{\code{overlay} create a layer on an existing volcano plot}
 \usage{
-overlay(DDSresult, szMod = 1, ...)
+overlay(DDSresult, szMod = 1, pch = 20, ...)
 }
 \arguments{
 \item{DDSresult}{a DESeqResults object}
 
 \item{szMod}{sizing modifier, a numerical vector to be applied to the elements of DDSResult. Vectors shorter than the axis they're being applied to will be recycled.}
 
+\item{pch}{point style to be displayed. by default pch = 20.}
+
 \item{...}{additional arguments to pass to points()}
 }
 \description{
 \code{overlay} should be executed after vplot(), and can be re-executed several times to build up layers on a plot.
+}
+\examples{
+library(DESeq2)
+simDDS <- DESeq(simDDS)
+resAB <- results(simDDS, contrast = c("condition", "A","B"))
+resAC <- results(simDDS, contrast = c("condition", "A","C"))
+
 }
