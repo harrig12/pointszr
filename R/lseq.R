@@ -14,6 +14,15 @@
 #' abline(v = lseq(0.1, 10, length.out = 20), col="#3366FF66")
 #' @export
 lseq <- function(from, to, length.out = 10) {
+  #check arguments provided
+  passed <- names(base::match.call())
+  if (! "from" %in% passed){
+    stop("argument \"from\" is missing, with no default")
+  }
+  if (! "to" %in% passed){
+    stop("argument \"to\" is missing, with no default")
+  }
+
   x <- seq(log(from), log(to), length.out = length.out)
   return(exp(x))
 }

@@ -1,25 +1,32 @@
 #test_overlay.R
 
-context("lseq")
+context("overlay")
 
 # ==== BEGIN SETUP AND PREPARE =================================================
 #
 
 load(system.file("extdata/dev/exampleDDSresult.RData", package = "pointszr"))
 
-#init empty plot, from
-#https://stackoverflow.com/questions/4785657/how-to-draw-an-empty-plot
-plot(1, type="n", xlab="", ylab="", xlim=c(-4, 4), ylim=c(0, 20))
+
+require(DESeq2)
+simDDS <- DESeq(simDDS)
+res <- results(simDDS)
 
 #
 # ==== END SETUP AND PREPARE ===================================================
 
-##TODO: check vplot() called first
-
-test_that("invalid axis causes error",  {
-  #expect_error(overlay(exDDSresult, c(1,2), axis = 0), "invalid value for axis. should be num 1 or 2")
-
+test_that("plot has been initialized before overlay called", {
+  expect_error(overlay(res), "plot.new has not been called yet", fixed = T)
 })
+
+#remaining tests require initialized plot
+plot(1:5, xlim = c(0,0.5), ylim = c(0,0.5))
+
+test_that("expect warning when points exceed plot margins", {
+  expect_warning(overlay(res),
+                 "Some of the points overlayed exceed plot margins. Consider resizing base plot", fixed = T)
+})
+
 
 test_that("a sample input prouces the expected output",  {
   #expect_equal(lseq(1,10, length.out = 5), tmp)
@@ -31,7 +38,9 @@ test_that("a sample input prouces the expected output",  {
 # stuff in tempdir().
 #
 
-rm(exDDSresult)
+rm(simDDS)
+rm(res)
+dev.off()
 
 # ==== END  TEARDOWN AND RESTORE ===============================================
 
