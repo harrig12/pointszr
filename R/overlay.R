@@ -20,7 +20,7 @@
 #' vplot(resAB)
 #' overlay(resAC, col=2)
 #'
-#' @seealso \link{par}
+#' @seealso \link{par}, \link{vplot}
 #' @export
 
 overlay <- function(DDSresult, szMod = 0.5, pch = 20, labelPoints = F, ...){
