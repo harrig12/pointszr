@@ -1,10 +1,6 @@
-# rpt
+# pointszr
 
-## R Package Template
-
-This is a template RStudio project for R packages, loosely based on Hadley Wickham's
-
-  [R Packages](http://r-pkgs.had.co.nz/) <http://r-pkgs.had.co.nz/>
+## Point resizing for volcano plots
 
 -----------------------------------------------
 
@@ -23,7 +19,7 @@ Some useful keyboard shortcuts for package authoring:
 -----------------------------------------------
 
 
-Load the package (outside of this project) with:
-    `devtools::install_github("<your user name>/<your package name>")`
+Load the package with:
+    `devtools::install_github("harrig12/pointszr")`
 
 
