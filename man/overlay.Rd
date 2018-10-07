@@ -2,26 +2,41 @@
 % Please edit documentation in R/overlay.R
 \name{overlay}
 \alias{overlay}
+\alias{addLabels}
 \title{\code{overlay} create a layer on an existing volcano plot}
 \usage{
-overlay(DDSresult, szMod = 1, pch = 20, ...)
+overlay(DDSresult, szMod = 0.5, pch = 20, labelPoints = F, ...)
+
+addLabels(DDSresult, pos = 3, labels = rownames(DDSresult), ...)
 }
 \arguments{
 \item{DDSresult}{a DESeqResults object}
 
 \item{szMod}{sizing modifier, a numerical vector to be applied to the elements of DDSResult. Vectors shorter than the axis they're being applied to will be recycled.}
 
-\item{pch}{point style to be displayed. by default pch = 20.}
+\item{pch}{point style to be displayed.}
 
-\item{...}{additional arguments to pass to points()}
+\item{labelPoints}{boolean, whether to label the points from DDSresult using \code{addLabels}.}
+
+\item{...}{additional arguments to pass to par}
+
+\item{pos}{label position relative to point}
+
+\item{labels}{names for points}
 }
 \description{
 \code{overlay} should be executed after vplot(), and can be re-executed several times to build up layers on a plot.
+\code{addLabels} will add point labels to a plot. This can be done using the default parameters by setting labelPoints = TRUE in \code{overlay}.
 }
 \examples{
-library(DESeq2)
+require(DESeq2)
 simDDS <- DESeq(simDDS)
 resAB <- results(simDDS, contrast = c("condition", "A","B"))
 resAC <- results(simDDS, contrast = c("condition", "A","C"))
+vplot(resAB)
+overlay(resAC, col=2)
 
+}
+\seealso{
+\link{par}
 }

@@ -19,12 +19,13 @@ vplot(DDSresult, pch = 20, cex = 0.5, ...)
 returns the DESeqResults object that was used for plotting.
 }
 \description{
-\code{vplot}
+\code{vplot} plot the differentially expressed genes, as specified in DDSresult
 }
 \examples{
-library(DESeq2)
+require(DESeq2)
 simDDS <- DESeq(simDDS)
 res <- results(simDDS)
+vplot(res)
 
 }
 \seealso{

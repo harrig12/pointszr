@@ -15,4 +15,5 @@ RoxygenNote: 6.1.0
 Imports: 
     tibble,
     dplyr,
-    DESeq2
+    DESeq2,
+    graphics
