@@ -8,8 +8,7 @@
 #' @param pch point style to be displayed. by default pch = 20.
 #' @param cex point size to be displayed. by default cex = 0.5
 #' @param ... additional arguments to pass to plot().
-#' @return returns the DESeqResults object that was used for plotting.
-#' @seealso DESeq2
+#' @seealso \link{par}
 #' @examples
 #' require(DESeq2)
 #' simDDS <- DESeq(simDDS)
@@ -23,5 +22,4 @@ vplot <- function(DDSresult, pch = 20, cex = 0.5, ...){
   graphics::plot(DDSresult$log2FoldChange, -log10(DDSresult$pvalue),
                        pch = pch, cex = cex, ...)
 
-  return(DDSresult)
 }

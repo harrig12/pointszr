@@ -2,4 +2,5 @@
 
 export(lseq)
 export(overlay)
+export(resizeGenes)
 export(vplot)

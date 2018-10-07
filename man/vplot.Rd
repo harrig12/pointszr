@@ -15,9 +15,6 @@ vplot(DDSresult, pch = 20, cex = 0.5, ...)
 
 \item{...}{additional arguments to pass to plot().}
 }
-\value{
-returns the DESeqResults object that was used for plotting.
-}
 \description{
 \code{vplot} plot the differentially expressed genes, as specified in DDSresult
 }
@@ -29,5 +26,5 @@ vplot(res)
 
 }
 \seealso{
-DESeq2
+\link{par}
 }

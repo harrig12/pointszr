@@ -38,5 +38,5 @@ overlay(resAC, col=2)
 
 }
 \seealso{
-\link{par}
+\link{par}, \link{vplot}
 }
