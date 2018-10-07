@@ -3,21 +3,60 @@
 #' \code{overlay} create a layer on an existing volcano plot
 #'
 #' \code{overlay} should be executed after vplot(), and can be re-executed several times to build up layers on a plot.
+#' \code{addLabels} will add point labels to a plot. This can be done using the default parameters by setting labelPoints = TRUE in \code{overlay}.
 #'
 #' @param DDSresult a DESeqResults object
 #' @param szMod sizing modifier, a numerical vector to be applied to the elements of DDSResult. Vectors shorter than the axis they're being applied to will be recycled.
-#' @param pch point style to be displayed. by default pch = 20.
-#' @param ... additional arguments to pass to points()
+#' @param pch point style to be displayed.
+#' @param labelPoints boolean, whether to label the points from DDSresult using \code{addLabels}.
+#' @param pos label position relative to point
+#' @param labels names for points
+#' @param ... additional arguments to pass to par
 #' @examples
-#' library(DESeq2)
+#' require(DESeq2)
 #' simDDS <- DESeq(simDDS)
 #' resAB <- results(simDDS, contrast = c("condition", "A","B"))
 #' resAC <- results(simDDS, contrast = c("condition", "A","C"))
+#' vplot(resAB)
+#' overlay(resAC, col=2)
 #'
+#' @seealso \link{par}
 #' @export
-#'
-overlay <- function(DDSresult, szMod = 1, pch = 20, ...){
-    szMod <- rep_len(szMod, length.out = dim(DDSresult)[1])
-    with(DDSresult, points(log2FoldChange, -log10(pvalue),
-                           pch = pch, cex=szMod, ...))
+
+overlay <- function(DDSresult, szMod = 0.5, pch = 20, labelPoints = F, ...){
+
+  #throw warning if points will not be visible on plot
+  xyLim <- graphics::par("usr")
+
+  exceedsX <- ((DDSresult$log2FoldChange < xyLim[1]) |
+                 (DDSresult$log2FoldChange > xyLim[2]))
+  exceedsY <- ((-log10(DDSresult$pvalue) < xyLim[3]) |
+                          (-log10(DDSresult$pvalue) > xyLim[4]))
+  #set NA's to false
+  exceedsX[is.na(exceedsX)] <- F
+  exceedsY[is.na(exceedsY)] <- F
+
+  if (any(exceedsX) | any(exceedsY)){
+    warning("Some of the points overlayed exceed plot margins. Consider resizing base plot")
+  }
+
+  #plot points
+  szMod <- rep_len(szMod, length.out = dim(DDSresult)[1])
+  graphics::points(DDSresult$log2FoldChange, -log10(DDSresult$pvalue),
+                   pch = pch, cex=szMod, ...)
+
+  #add labels
+  if (labelPoints){
+    addLabels(DDSresult)
+  }
 }
+
+#' @rdname overlay
+addLabels <- function(DDSresult, pos = 3, labels = rownames(DDSresult), ...){
+
+  #plot labels
+  graphics::text(DDSresult$log2FoldChange, -log10(DDSresult$pvalue), pos = pos,
+       labels = labels, ...)
+
+}
+
