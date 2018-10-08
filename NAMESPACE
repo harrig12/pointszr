@@ -3,4 +3,5 @@
 export(lseq)
 export(overlay)
 export(resizeGenes)
+export(szPreview)
 export(vplot)
