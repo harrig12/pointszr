@@ -13,7 +13,7 @@
 #' require(DESeq2)
 #' simDDS <- DESeq(simDDS)
 #' res <- results(simDDS)
-#' vplot(res)
+#' vplot(res, xlab = "log2FoldChange", ylab = "-log10(pvalue)")
 #'
 #' @export
 

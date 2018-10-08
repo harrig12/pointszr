@@ -14,7 +14,7 @@
 #' require(DESeq2)
 #' simDDS <- DESeq(simDDS)
 #' res <- results(simDDS)
-#' vplot(res)
+#' vplot(res, xlab = "log2FoldChange", ylab = "-log10(pvalue)")
 #' potentialCancerDrivers <- sample(rownames(res), 100)
 #' knownOncogenes <- c("gene866", "gene882", "gen614", "gene89", "gene70", "gene700", "gene205")
 #' knownTumorRepressors <- c("gene614", "gene170", "gene441", "gene229", "gene363")

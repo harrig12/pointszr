@@ -17,7 +17,7 @@
 #' simDDS <- DESeq(simDDS)
 #' resAB <- results(simDDS, contrast = c("condition", "A","B"))
 #' resAC <- results(simDDS, contrast = c("condition", "A","C"))
-#' vplot(resAB)
+#' vplot(resAB, xlab = "log2FoldChange", ylab = "-log10(pvalue)")
 #' overlay(resAC, col=2)
 #'
 #' @seealso \link{par}, \link{vplot}
