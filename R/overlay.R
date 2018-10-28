@@ -52,6 +52,7 @@ overlay <- function(DDSresult, szMod = 0.5, pch = 20, labelPoints = F, ...){
 }
 
 #' @rdname overlay
+#' @export
 addLabels <- function(DDSresult, pos = 3, labels = rownames(DDSresult), ...){
 
   #plot labels
