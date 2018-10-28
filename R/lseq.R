@@ -26,3 +26,5 @@ lseq <- function(from, to, length.out = 10) {
   x <- seq(log(from), log(to), length.out = length.out)
   return(exp(x))
 }
+
+# [END]

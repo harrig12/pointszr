@@ -28,6 +28,9 @@ resizeGenes <- function(DDSresult, geneLists,
                         sz = lseq(1, 8, length.out = length(geneLists)),
                         pch = 20, ...){
 
+  #if fewer sizes than genes are provided, recycle sizes
+  sz <- rep_len(sz, length(geneLists))
+
   for (i in 1:length(geneLists)){
     geneList <- geneLists[[i]]
     resSubset <- subset(DDSresult, rownames(DDSresult) %in% geneList)
@@ -35,3 +38,5 @@ resizeGenes <- function(DDSresult, geneLists,
   }
 
 }
+
+# [END]

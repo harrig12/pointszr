@@ -14,3 +14,5 @@ szPreview <- function(sz){
                  xlab = "Index in sz", main = "Point size preview")
   graphics::points(1:length(sz), rep(0, length(sz)), pch = 20, cex = sz)
 }
+
+#[END]

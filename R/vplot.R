@@ -23,3 +23,5 @@ vplot <- function(DDSresult, pch = 20, cex = 0.5, ...){
                        pch = pch, cex = cex, ...)
 
 }
+
+# [END]
