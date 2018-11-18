@@ -12,11 +12,14 @@ addLabels(DDSresult, pos = 3, labels = rownames(DDSresult), ...)
 \arguments{
 \item{DDSresult}{a DESeqResults object}
 
-\item{szMod}{sizing modifier, a numerical vector to be applied to the elements of DDSResult. Vectors shorter than the axis they're being applied to will be recycled.}
+\item{szMod}{sizing modifier, a numerical vector to be applied to the \cr
+elements of DDSResult. Vectors shorter than the axis they're being \cr
+applied to will be recycled.}
 
 \item{pch}{point style to be displayed.}
 
-\item{labelPoints}{boolean, whether to label the points from DDSresult using \code{addLabels}.}
+\item{labelPoints}{boolean, whether to label the points from DDSresult \cr
+using \code{addLabels}.}
 
 \item{...}{additional arguments to pass to par}
 
@@ -25,8 +28,12 @@ addLabels(DDSresult, pos = 3, labels = rownames(DDSresult), ...)
 \item{labels}{names for points}
 }
 \description{
-\code{overlay} should be executed after vplot(), and can be re-executed several times to build up layers on a plot.
-\code{addLabels} will add point labels to a plot. This can be done using the default parameters by setting labelPoints = TRUE in \code{overlay}.
+\code{overlay} should be executed after vplot(), and can be re-executed \cr
+several times to build up layers on a plot.
+}
+\details{
+\code{addLabels} will add point labels to a plot. This can be done using \cr
+the default parameters by setting labelPoints = TRUE in \code{overlay}.
 }
 \examples{
 require(DESeq2)

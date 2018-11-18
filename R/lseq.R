@@ -2,11 +2,14 @@
 
 #' \code{lseq} output a sequence of logarithmically spaced numbers.
 #'
-#' \code{lseq} works like \code{seq} in that it returns a vector of numbers with \code{from} as the first element, \code{to} as the last elelemnt, and \code{length.out} as the length of the vector, but the values are logarithmically spaced.
+#' \code{lseq} works like \code{seq} in that it returns a vector of numbers \cr
+#' with \code{from} as the first element, \code{to} as the last elelemnt, and \cr
+#' \code{length.out} as the length of the vector, \cr but the values are \cr
+#' logarithmically spaced.
 #'
 #' @param from first number in the sequence.
 #' @param to last number in the sequence.
-#' @param length.out length of the sequence, a positive integer > 1. Default is 10.
+#' @param length.out length of the sequence, a positive integer > 1
 #' @return A numeric vector.
 #' @seealso \code{\link{seq}}
 #' @examples
@@ -23,7 +26,7 @@ lseq <- function(from, to, length.out = 10) {
     stop("argument \"to\" is missing, with no default")
   }
 
-  x <- seq(log(from), log(to), length.out = length.out)
+  x <- base::seq(log(from), log(to), length.out = length.out)
   return(exp(x))
 }
 

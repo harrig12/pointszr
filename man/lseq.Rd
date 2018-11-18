@@ -11,13 +11,16 @@ lseq(from, to, length.out = 10)
 
 \item{to}{last number in the sequence.}
 
-\item{length.out}{length of the sequence, a positive integer > 1. Default is 10.}
+\item{length.out}{length of the sequence, a positive integer > 1}
 }
 \value{
 A numeric vector.
 }
 \description{
-\code{lseq} works like \code{seq} in that it returns a vector of numbers with \code{from} as the first element, \code{to} as the last elelemnt, and \code{length.out} as the length of the vector, but the values are logarithmically spaced.
+\code{lseq} works like \code{seq} in that it returns a vector of numbers \cr
+with \code{from} as the first element, \code{to} as the last elelemnt, and \cr
+\code{length.out} as the length of the vector, \cr but the values are \cr
+logarithmically spaced.
 }
 \examples{
 plot(c(0.1,10), c(0,1))

@@ -2,13 +2,19 @@
 
 #' \code{overlay} create a layer on an existing volcano plot
 #'
-#' \code{overlay} should be executed after vplot(), and can be re-executed several times to build up layers on a plot.
-#' \code{addLabels} will add point labels to a plot. This can be done using the default parameters by setting labelPoints = TRUE in \code{overlay}.
+#' \code{overlay} should be executed after vplot(), and can be re-executed \cr
+#' several times to build up layers on a plot.
+#'
+#' \code{addLabels} will add point labels to a plot. This can be done using \cr
+#' the default parameters by setting labelPoints = TRUE in \code{overlay}.
 #'
 #' @param DDSresult a DESeqResults object
-#' @param szMod sizing modifier, a numerical vector to be applied to the elements of DDSResult. Vectors shorter than the axis they're being applied to will be recycled.
+#' @param szMod sizing modifier, a numerical vector to be applied to the \cr
+#' elements of DDSResult. Vectors shorter than the axis they're being \cr
+#' applied to will be recycled.
 #' @param pch point style to be displayed.
-#' @param labelPoints boolean, whether to label the points from DDSresult using \code{addLabels}.
+#' @param labelPoints boolean, whether to label the points from DDSresult \cr
+#' using \code{addLabels}.
 #' @param pos label position relative to point
 #' @param labels names for points
 #' @param ... additional arguments to pass to par
@@ -37,7 +43,8 @@ overlay <- function(DDSresult, szMod = 0.5, pch = 20, labelPoints = F, ...){
   exceedsY[is.na(exceedsY)] <- F
 
   if (any(exceedsX) | any(exceedsY)){
-    warning("Some of the points overlayed exceed plot margins. Consider resizing base plot")
+    warning("Some of the points overlayed exceed plot margins.
+            Consider resizing base plot.")
   }
 
   #plot points

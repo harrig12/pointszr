@@ -17,7 +17,8 @@ plot(1:5, xlim = c(0,0.5), ylim = c(0,0.5))
 
 test_that("expect warning when points exceed plot margins", {
   expect_warning(overlay(res),
-                 "Some of the points overlayed exceed plot margins. Consider resizing base plot", fixed = T)
+                 "Some of the points overlayed exceed plot margins.
+            Consider resizing base plot.", fixed = T)
 })
 
 

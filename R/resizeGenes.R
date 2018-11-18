@@ -2,7 +2,8 @@
 
 #' \code{resizeGenes} resize select subsets of  genes plotted from a DESeqDataSet
 #'
-#' \code{resizeGenes} plot the differentially expressed genes, as specified in DDSresult, sized accordingly
+#' \code{resizeGenes} plot the differentially expressed genes, as specified \cr
+#' in DDSresult, sized accordingly
 #'
 #' @param DDSresult a DESeqResults object
 #' @param geneLists a list of lists of genes to be resized

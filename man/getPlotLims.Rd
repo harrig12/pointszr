@@ -2,7 +2,8 @@
 % Please edit documentation in R/getPlotLims.R
 \name{getPlotLims}
 \alias{getPlotLims}
-\title{\code{getPlotLims} Get the plot limits of a volcano plot for the passed DESeqResults object}
+\title{\code{getPlotLims} Get the plot limits of a volcano plot for the passed \cr
+DESeqResults object}
 \usage{
 getPlotLims(DDSresult)
 }
@@ -13,7 +14,8 @@ getPlotLims(DDSresult)
 list of xlim and ylim of a vplot for the object
 }
 \description{
-\code{getPlotLims} Get the plot limits of a volcano plot for the passed DESeqResults object
+\code{getPlotLims} Get the plot limits of a volcano plot for the passed \cr
+DESeqResults object
 }
 \examples{
 require(DESeq2)
