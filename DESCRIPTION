@@ -10,10 +10,9 @@ License: file LICENSE
 Encoding: UTF-8
 LazyData: true
 Suggests:
-    testthat
+    testthat,
+    DESeq2
 RoxygenNote: 6.1.0
 Imports: 
-    tibble,
-    dplyr,
-    DESeq2,
+    BiocGenerics,
     graphics
