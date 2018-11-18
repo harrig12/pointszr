@@ -16,8 +16,8 @@ tmp <- c(  1.0
 test_that("corrupt input generates errors",  {
   expect_error(lseq(), "argument \"from\" is missing, with no default", fixed = T)
   expect_error(lseq(2), "argument \"to\" is missing, with no default", fixed = T)
-  expect_error(lseq(0,10), "'from' must be a finite number")
-  expect_error(lseq(10,0), "'to' must be a finite number")
+  expect_error(lseq(0,10), "'from' cannot be NA, NaN or infinite")
+  expect_error(lseq(10,0), "'to' cannot be NA, NaN or infinite")
 })
 
 test_that("a sample input prouces the expected output",  {
