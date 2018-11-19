@@ -16,4 +16,5 @@ Imports:
     BiocGenerics,
     S4Vectors,
     DESeq2,
+    shiny,
     graphics
