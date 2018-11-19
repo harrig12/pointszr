@@ -10,14 +10,16 @@
 #' @param fPath path to file on user's system. expect file to be a CSV of gene \cr
 #' expression counts with first row names of test conditions, and first \cr
 #' column names of genes (with no repeats)
+#' @param header whether file contains header, passed to read.csv()
+#' @param sep data delimiting character, passed to read.csv()
 #'
 #' @return DESeqDataSet
-#'
+#'@seealso \link{read.csv}
 
-fileToDESeq2 <- function(fPath){
+fileToDESeq2 <- function(fPath, header = T, sep = ","){
 
-  myData <- utils::read.csv(fPath, row.names = 1, header = T,
-                            stringsAsFactors = F)
+  myData <- utils::read.csv(fPath, row.names = 1, header = header,
+                            sep = sep, stringsAsFactors = F)
   conds <- base::factor(base::names(myData))
 
   myData <- base::as.matrix(myData)

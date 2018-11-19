@@ -7,16 +7,23 @@ shiny app. This function is very limited in its arguments, since the user \cr
 can't do much manipulaiton once in the shiny app. \cr
 Want to limit the options available.}
 \usage{
-fileToDESeq2(fPath)
+fileToDESeq2(fPath, header = T, sep = ",")
 }
 \arguments{
 \item{fPath}{path to file on user's system. expect file to be a CSV of gene \cr
 expression counts with first row names of test conditions, and first \cr
 column names of genes (with no repeats)}
+
+\item{header}{whether file contains header, passed to read.csv()}
+
+\item{sep}{data delimiting character, passed to read.csv()}
 }
 \value{
 DESeqDataSet
 }
 \description{
 \code{fileToDESeq2} Create a DESeqDataSet from a file input
+}
+\seealso{
+\link{read.csv}
 }
