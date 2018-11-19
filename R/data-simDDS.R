@@ -8,7 +8,7 @@
 #' colData(simDDS)$condition <- factor(c(rep("A", 4), rep("B", 4), rep("C", 4)))
 #' }
 #'
-#' @format Example A MAF formatted file with 15 rows and 32 columns:
+#' @format A DESeqDataSet with 1000 rows and 12 columns:
 #' \describe{
 #'   class: DESeqDataSet
 #'   dim: 1000 12
@@ -23,9 +23,7 @@
 #' @seealso DESeq2::makeExampleDESeqDataSet
 #' @examples
 #' \dontrun{
-#' system.file("data", "NOSUCH.maf", package="rpt")
-#' fPath <- system.file("data", "NOSUCH.maf", package="rpt")
-#' myExample <- read.delim(fPath, stringsAsFactors = FALSE)
+#' (simDDS)
 #' }
 #' @docType data
 #' @name simDDS
