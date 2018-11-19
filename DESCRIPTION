@@ -10,9 +10,10 @@ License: file LICENSE
 Encoding: UTF-8
 LazyData: true
 Suggests:
-    testthat,
-    DESeq2
+    testthat
 RoxygenNote: 6.1.0
 Imports: 
     BiocGenerics,
+    S4Vectors,
+    DESeq2,
     graphics
