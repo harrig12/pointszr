@@ -10,11 +10,12 @@ License: file LICENSE
 Encoding: UTF-8
 LazyData: true
 Suggests:
-    testthat
+    testthat,
+    shiny,
+    stats
 RoxygenNote: 6.1.0
 Imports: 
     BiocGenerics,
     S4Vectors,
     DESeq2,
-    shiny,
     graphics

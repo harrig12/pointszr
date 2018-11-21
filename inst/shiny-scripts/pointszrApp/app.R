@@ -2,8 +2,12 @@
 
 #built based on https://shiny.rstudio.com/gallery/file-upload.html
 #with reference to
+    #https://stackoverflow.com/questions/30991900/avoid-double-refresh-of-plot-in-shiny
+    #https://shiny.rstudio.com/tutorial/written-tutorial/lesson5/
+
 
 library(shiny)
+library(stats)
 
 # Define UI for data upload app ----
 pointszrUI <- fluidPage(
@@ -45,114 +49,141 @@ pointszrUI <- fluidPage(
                                "Single Quote" = "'"),
                    selected = '"'),
 
-      # Horizontal line ----
-      tags$hr(),
-
       # Input: Select number of rows to display ----
       radioButtons("showHead", "Display",
                    choices = c(Head = "head",
                                All = "all"),
-                   selected = "head")
+                   selected = "head"),
+
+      # Horizontal line ----
+      tags$hr(),
+
+      fluidRow(
+        column(width = 4,
+               tableOutput("contents")
+        )
+      )
 
     ),
 
     # Main panel for displaying outputs ----
     mainPanel(
 
-      # Output: Data file ----
-      tableOutput("contents")
+      fluidRow(
 
-    )
-  ),
+        # Input: Checkbox whether to invert point selection ----
+        column(width = 4,
+               checkboxInput("invertSel", "invert point selection", FALSE)),
 
-  fluidRow(
-    column(width = 4,
-           plotOutput("plot1", height = 300,
-                      # Equivalent to: click = clickOpts(id = "plot_click")
-                      click = "plot1_click",
-                      brush = brushOpts(
-                        id = "plot1_brush"
-                      )
+        # Input: Slider for selected point size
+        column(width = 4, sliderInput("pointSz", "selected point size",
+                                      min = 0.5, max = 6, value = 1)),
+
+        # Input: Select colour ----
+        column(width = 4, radioButtons("pointCol", "selected point colour",
+                                       choices = c("black" = 1,
+                                                   "red" = 2,
+                                                   "blue" = 4),
+                                       selected = "red"))
+      ),
+
+      fluidRow(
+        plotOutput("plot1", height = 600,
+           # Equivalent to: click = clickOpts(id = "plot_click")
+           click = "plot1_click",
+           brush = brushOpts(
+             id = "plot1_brush"
            )
-    )
-  ),
-  fluidRow(
-    column(width = 6,
-           h4("Points near click"),
-           verbatimTextOutput("click_info")
-    ),
-    column(width = 6,
-           h4("Brushed points"),
-           verbatimTextOutput("brush_info")
+        )
+      ),
+
+      fluidRow(
+        column(width = 12,
+               h4("Brushed points"),
+               verbatimTextOutput("brush_info")
+        )
+      )
+
     )
   )
+
 )
+
+
 
 # Define server logic to read selected file ----
 pointszrServer <- function(input, output) {
 
-    intermediate <- NULL
+  output$contents <- renderTable({
 
-    output$contents <- renderTable({
+    req(input$file1)
 
-      req(input$file1)
+    tryCatch({
+      userData <- read.csv(input$file1$datapath,
+                           header = input$header,
+                          sep = input$sep,
+                          quote = input$quote)
+      },
 
-      tryCatch(
-        {
-          #        df <- read.csv(input$file1$datapath,
-          #                       header = input$header,
-          #                       sep = input$sep,
-          #                       quote = input$quote)
-          userDDS <- pointszr:::fileToDESeq2(input$file1$datapath,
-                                             header = input$header,
-                                             sep = input$sep)
-        },
-        error = function(e) {
-          # return a safeError if a parsing error occurs
-          stop(safeError(e))
-        }
-      )
-
-      intermediate$userDDS <- DESeq2::DESeq(userDDS)
-      res <- DESeq2::results(intermediate$userDDS)
-      intermediate$userRes <- res
-
-      if(input$showHead == "head") {
-        return(head(res))
+      error = function(e) {
+        # return a safeError if a parsing error occurs
+        stop(safeError(e))
       }
-      else {
-        return(res)
-      }
+    )
+
+    if(input$showHead == "head") {
+      return(head(userData))
+    }
+    else {
+      return(userData)
+    }
 
   })
 
-  output$designInfo <- renderText({
-    designParse <- base::strsplit(intermediate$userRes@elementMetadata$description[2])
-    designParse <- unlist(designParse)[2]
-    retText <- sprintf("Contrast used for log2 fold change and Wald test p-value:
-                       %s", designParse)
-    return(retText)
+  #Create buffer for point selection
+  brushSet <- reactiveValues(brush = NULL)
+
+  #Observe point selection
+  observeEvent(eventExpr = input$plot1_brush,
+               handlerExpr = {brushSet$brush <- input$plot1_brush})
+
+  pointSel <- reactive({
+
+    source(system.file("shiny-scripts/prepRes.R", package = "pointszr"), local = T)
+
+      return(brushedPoints(resPoints, brushSet$brush,
+                           xvar = "log2FoldChange",
+                           yvar = "negative_log10_pvalue"))
   })
 
-#  output$plot1 <- renderPlot({
-#    #base plot
-#    pointszr::vplot(intermediate$userRes)
-#    #overlay subset layers
-#    #pointszr::overlay()
-#  })
-#
-#  output$click_info <- renderPrint({
-#    # Because it's a ggplot2, we don't need to supply xvar or yvar; if this
-#    # were a base graphics plot, we'd need those.
-#    nearPoints(df, input$plot1_click, addDist = TRUE)
-#  })
-#
-#  output$brush_info <- renderPrint({
-#    brushedPoints(mtcars2, input$plot1_brush)
-#  })
+  #Plot
+  output$plot1 <- renderPlot({
+
+    source(system.file("shiny-scripts/prepRes.R", package = "pointszr"), local = T)
+
+    #base plot
+    pointszr::vplot(res)
+
+    #overlay subset layers
+
+    if (input$invertSel){ #invert the point selection
+      sel <- subset(res, !(rownames(res) %in% rownames(pointSel())))
+      pointszr::overlay(sel, col=input$pointCol, szMod = input$pointSz)
+    }
+    else {
+      sel <- subset(res, rownames(res) %in% rownames(pointSel()))
+      pointszr::overlay(sel, col=input$pointCol, szMod = input$pointSz)
+    }
+
+  })
+
+  output$brush_info <- renderPrint({
+    pointSel()
+  })
 
 }
 
+#Define app ----
 shinyApp(ui = pointszrUI, server = pointszrServer)
 
 #[END]
