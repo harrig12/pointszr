@@ -1,7 +1,6 @@
 #prepRes.R
 
-#for click and brush rendering
-
+#Check file uploaded ----
 req(input$file1)
 
 tryCatch(
@@ -16,9 +15,11 @@ tryCatch(
   }
 )
 
+#Compute result ----
 userDDS <- DESeq2::DESeq(userDDS)
 res <- DESeq2::results(userDDS)
 
+#Further processing for plotting, brush rendering ----
 resPoints <- res
 #remove NA's (can't select or plot these)
 resPoints <- resPoints[stats::complete.cases(resPoints$pvalue),]
