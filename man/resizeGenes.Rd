@@ -32,7 +32,9 @@ knownOncogenes <- c("gene866", "gene882", "gen614", "gene89", "gene70", "gene700
 knownTumorRepressors <- c("gene614", "gene170", "gene441", "gene229", "gene363")
 geneSets <- list(potentialCancerDrivers, knownOncogenes, knownTumorRepressors)
 resizeGenes(res, geneSets, sz = 1:3, col = 2)
-legend("top",c("Known Occogenes","Known Tumor Repressors", "Potential Cancer drivers", "Other Genes"), pt.cex = 1:3, col = c(2,2,2,1), pch = 20)
+legend("top",c("Known Occogenes","Known Tumor Repressors",
+               "Potential Cancer drivers", "Other Genes"),
+       pt.cex = 1:3, col = c(2,2,2,1), pch = 20)
 
 }
 \seealso{
