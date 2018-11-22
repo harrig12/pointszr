@@ -164,17 +164,18 @@ pointszrServer <- function(input, output) {
     #base plot
     pointszr::vplot(res)
 
-    #overlay subset layers
+    #overlay subset layers if some selection has been made
+    if(is.null(pointSel()) == FALSE){
 
-    if (input$invertSel){ #invert the point selection
-      sel <- subset(res, !(rownames(res) %in% rownames(pointSel())))
-      pointszr::overlay(sel, col=input$pointCol, szMod = input$pointSz)
+      if (input$invertSel){ #invert the point selection
+        sel <- subset(res, !(rownames(res) %in% rownames(pointSel())))
+        pointszr::overlay(sel, col=input$pointCol, szMod = input$pointSz)
+      }
+      else {
+        sel <- subset(res, rownames(res) %in% rownames(pointSel()))
+        pointszr::overlay(sel, col=input$pointCol, szMod = input$pointSz)
+      }
     }
-    else {
-      sel <- subset(res, rownames(res) %in% rownames(pointSel()))
-      pointszr::overlay(sel, col=input$pointCol, szMod = input$pointSz)
-    }
-
   })
 
   output$brush_info <- renderPrint({
