@@ -84,7 +84,7 @@ pointszrUI <- fluidPage(
                                        choices = c("black" = 1,
                                                    "red" = 2,
                                                    "blue" = 4),
-                                       selected = "red"))
+                                       selected = 1))
       ),
 
       fluidRow(
@@ -165,7 +165,7 @@ pointszrServer <- function(input, output) {
     pointszr::vplot(res)
 
     #overlay subset layers if some selection has been made
-    if(is.null(pointSel()) == FALSE){
+    if(is.null(brushSet$brush) == FALSE){
 
       if (input$invertSel){ #invert the point selection
         sel <- subset(res, !(rownames(res) %in% rownames(pointSel())))
