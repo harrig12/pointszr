@@ -77,7 +77,7 @@ pointszrUI <- fluidPage(
 
         # Input: Slider for selected point size
         column(width = 4, sliderInput("pointSz", "selected point size",
-                                      min = 0.5, max = 6, value = 1)),
+                                      min = 0.5, max = 6, value = 1, step= 0.25)),
 
         # Input: Select colour ----
         column(width = 4, radioButtons("pointCol", "selected point colour",
@@ -168,11 +168,11 @@ pointszrServer <- function(input, output) {
     if(is.null(brushSet$brush) == FALSE){
 
       if (input$invertSel){ #invert the point selection
-        sel <- subset(res, !(rownames(res) %in% rownames(pointSel())))
+        sel <- BiocGenerics::subset(res, !(rownames(res) %in% rownames(pointSel())))
         pointszr::overlay(sel, col=input$pointCol, szMod = input$pointSz)
       }
       else {
-        sel <- subset(res, rownames(res) %in% rownames(pointSel()))
+        sel <- BiocGenerics::subset(res, rownames(res) %in% rownames(pointSel()))
         pointszr::overlay(sel, col=input$pointCol, szMod = input$pointSz)
       }
     }
