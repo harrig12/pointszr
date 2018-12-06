@@ -10,6 +10,7 @@
 #' @param sz a list of sized to be assigned to genes.
 #' @param pch point style to be displayed. by default pch = 20.
 #' @param ... additional arguments to pass to par.
+#' @return no return, plotting side effect
 #' @seealso \link{par}, \link{overlay}, , \link{vplot}
 #' @examples
 #' require(DESeq2)

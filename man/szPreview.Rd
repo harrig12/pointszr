@@ -9,6 +9,9 @@ szPreview(sz)
 \arguments{
 \item{sz}{an list of sizes to make points}
 }
+\value{
+no return, plotting side effect
+}
 \description{
 \code{szPreview} Display what a list of point sizes looks like when plotted
 }

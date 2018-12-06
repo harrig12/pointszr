@@ -5,7 +5,7 @@
 \alias{addLabels}
 \title{\code{overlay} create a layer on an existing volcano plot}
 \usage{
-overlay(DDSresult, szMod = 0.5, pch = 20, labelPoints = F, ...)
+overlay(DDSresult, szMod = 0.5, pch = 20, labelPoints = FALSE, ...)
 
 addLabels(DDSresult, pos = 3, labels = rownames(DDSresult), ...)
 }
@@ -26,6 +26,9 @@ using \code{addLabels}.}
 \item{pos}{label position relative to point}
 
 \item{labels}{names for points}
+}
+\value{
+no return, plotting side effect
 }
 \description{
 \code{overlay} should be executed after vplot(), and can be re-executed \cr

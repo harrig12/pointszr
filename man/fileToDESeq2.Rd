@@ -7,7 +7,7 @@ shiny app. This function is very limited in its arguments, since the user \cr
 can't do much manipulaiton once in the shiny app. \cr
 Want to limit the options available.}
 \usage{
-fileToDESeq2(fPath, header = T, sep = ",")
+fileToDESeq2(fPath, header = TRUE, sep = ",")
 }
 \arguments{
 \item{fPath}{path to file on user's system. expect file to be a CSV of gene \cr

@@ -16,12 +16,12 @@
 
 getPlotLims <- function(DDSresult){
 
-  x <- c(min(DDSresult$log2FoldChange, na.rm = T),
-         max(DDSresult$log2FoldChange, na.rm = T))
+  x <- c(min(DDSresult$log2FoldChange, na.rm = TRUE),
+         max(DDSresult$log2FoldChange, na.rm = TRUE))
 
   #for -log values, min and max will be inverted
-  y <- c(-log10(max(DDSresult$pvalue, na.rm = T)),
-         -log10(min(DDSresult$pvalue, na.rm = T)))
+  y <- c(-log10(max(DDSresult$pvalue, na.rm = TRUE)),
+         -log10(min(DDSresult$pvalue, na.rm = TRUE)))
 
   return(list(x=x, y=y))
 

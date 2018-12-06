@@ -64,7 +64,7 @@ library(DESeq2)
 library(pointszr)
 library(DESeq2)
 ```
-```{r echo=T}
+```{r echo=TRUE}
 #using simulated data provided with package
 summary(simDDS)
 
@@ -79,7 +79,7 @@ attributes(res)$elementMetadata
 ```
 
 ### Create volcano plot wiht `vplot()`
-```{r echo=T}
+```{r echo=TRUE}
 vplot(res)
 ```
 
@@ -88,7 +88,7 @@ vplot(res)
 
 ### Add to the base plot with `overlay()`
 The idea beind overlay is exactly what it sounds like. We overlay the points of another experiment on top of the volcano plot of the first. Here, we show a case where some subset of the volcano plot is modified, to hilight genes with absolute log-fold-change greater than 1, and a p-value that affords some significance.
-```{r echo=T}
+```{r echo=TRUE}
 vplot(res)
 
 # illustrate thresholds of significance
@@ -97,7 +97,7 @@ abline(-log10(0.1), 0, lty = 2, col = 5)
 legend("top", c("0.05", "0.1"), lty = 2, col = 4:5 )
 ```
 
-```{r echo=T}
+```{r echo=TRUE}
 vplot(res)
 
 # highlight points that meet criteria of interest
@@ -108,19 +108,19 @@ overlay(sel05, col = 5)
 ```
 
 Maybe we're intersted in those few extreme points. Let's blow up those points, using the `szMod` argument to `overlay() ` and see what genes those are, setting `lables = TRUE`.
-```{r echo=T}
+```{r echo=TRUE}
 vplot(res, ylim = c(0, 4.4), xlim = c(-1.5, 2))
 
 # highlight points that meet criteria of interest
 sel <- subset( res, -log10(res$pvalue) > 2.5 )
-overlay(sel, col = 5, szMod = 2, labelPoints = T)
+overlay(sel, col = 5, szMod = 2, labelPoints = TRUE)
 ```
 
 Neat. Let's remember these genes for later. In a real (non-simulated) experiment this are gene names.
 
 We can do more with `overlay`. For example, let's introduce another test condition.
 
-```{r echo=T}
+```{r echo=TRUE}
 #Create result sets with contrasts specified
 resAB <- results(simDDS, contrast = c("condition", "B","A"))
 resAC <- results(simDDS, contrast = c("condition", "C","A"))
@@ -135,7 +135,7 @@ legend("top", c("B vs A", "C vs A"), pch = 20, col = 1:2)
 Uh oh! There's a conveinent warning to let us know that the new test condition has points that are not shown because of the plot margins. An easy fix may be to plot resAC first and resAB second, but to be safe, we can just check the largest margins necessary with the function `getPlotLims()`
 
 ### Find margin parameters with `getPlotLims()`
-```{r plot1.0, echo = T}
+```{r plot1.0, echo = TRUE}
 xWidth <- c(getPlotLims(resAC)$x, getPlotLims(resAB)$x)
 xWidth <- c(min(xWidth), max(xWidth))
 
@@ -156,15 +156,15 @@ Now let's see all the genes with exteme expression change. Be careful to apply t
 <<plot1.0>>
 #extreme points under trest condition B
 BextremeSel <- subset(resAB, -log10(resAB$pvalue) > 2.5 )
-overlay(BextremeSel, col = 1, szMod = 2, labelPoints = T)
+overlay(BextremeSel, col = 1, szMod = 2, labelPoints = TRUE)
 
 #and C
 CextremeSel <- subset(resAC, -log10(resAC$pvalue) > 2.5 )
-overlay(CextremeSel, col = 2, szMod = 2, labelPoints = T)
+overlay(CextremeSel, col = 2, szMod = 2, labelPoints = TRUE)
 ```
 
 This is a little hard to read, we can play with plotting parameters, or just look at the results objects.
-```{r echo=T}
+```{r echo=TRUE}
 rownames(BextremeSel)
 rownames(CextremeSel)
 ```
@@ -174,8 +174,8 @@ Well these aren't the same genes for both test conditions! Let's go back to the 
 ```{r plot1.2, echo = -(1:9)}
 <<plot1.0>>
 extCinB <- subset( resAB, rownames(resAB) %in% rownames(CextremeSel) )
-overlay(extCinB, col = 1, szMod = 2, labelPoints = T)
-overlay(CextremeSel, col = 2, szMod = 2, labelPoints = T)
+overlay(extCinB, col = 1, szMod = 2, labelPoints = TRUE)
+overlay(CextremeSel, col = 2, szMod = 2, labelPoints = TRUE)
 ```
 
 There's a more reader-friendly way to check this, however.
@@ -183,7 +183,7 @@ There's a more reader-friendly way to check this, however.
 ## Resize points by gene name with `resizeGenes()`
 ```{r plot1.3, echo = -(1:10)}
 <<plot1.0>>
-overlay(CextremeSel, col = 2, szMod = 2, labelPoints = T)
+overlay(CextremeSel, col = 2, szMod = 2, labelPoints = TRUE)
 resizeGenes(resAB, rownames(CextremeSel), sz = 2, col = 1)
 ```
 
@@ -191,7 +191,8 @@ resizeGenes(resAB, rownames(CextremeSel), sz = 2, col = 1)
 
 ```{r echo = F}
 localizationData <- data.frame( base::sample(c(0,1,2,3), size=1000,
-                                             replace =T, prob = c(0.7, 0.25, 0.04, 0.001))) 
+                                             replace =TRUE, 
+                                             prob = c(0.7, 0.25, 0.04, 0.001))) 
 rownames(localizationData) <- rownames(simDDS)
 colnames(localizationData) <- "localization"
 ```

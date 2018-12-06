@@ -16,10 +16,10 @@
 #' @return DESeqDataSet
 #'@seealso \link{read.csv}
 
-fileToDESeq2 <- function(fPath, header = T, sep = ","){
+fileToDESeq2 <- function(fPath, header = TRUE, sep = ","){
 
   myData <- utils::read.csv(fPath, row.names = 1, header = header,
-                            sep = sep, stringsAsFactors = F)
+                            sep = sep, stringsAsFactors = FALSE)
   conds <- base::factor(base::names(myData))
 
   myData <- base::as.matrix(myData)

@@ -22,6 +22,9 @@ vplot(DDSresult, main = "Volcano Plot", xlab = "log2 Fold Change",
 
 \item{...}{additional arguments to pass to plot().}
 }
+\value{
+no return, plotting side effect
+}
 \description{
 \code{vplot} plot the differentially expressed genes, as specified in DDSresult
 }

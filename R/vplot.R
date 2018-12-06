@@ -11,6 +11,7 @@
 #' @param pch point style to be displayed. by default pch = 20.
 #' @param cex point size to be displayed. by default cex = 0.5
 #' @param ... additional arguments to pass to plot().
+#' @return no return, plotting side effect
 #' @seealso \link{par}
 #' @examples
 #' require(DESeq2)

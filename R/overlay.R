@@ -18,6 +18,7 @@
 #' @param pos label position relative to point
 #' @param labels names for points
 #' @param ... additional arguments to pass to par
+#' @return no return, plotting side effect
 #' @examples
 #' require(DESeq2)
 #' simDDS <- DESeq(simDDS)
@@ -29,7 +30,7 @@
 #' @seealso \link{par}, \link{vplot}
 #' @export
 
-overlay <- function(DDSresult, szMod = 0.5, pch = 20, labelPoints = F, ...){
+overlay <- function(DDSresult, szMod = 0.5, pch = 20, labelPoints = FALSE, ...){
 
   #throw warning if points will not be visible on plot
   xyLim <- graphics::par("usr")
@@ -39,8 +40,8 @@ overlay <- function(DDSresult, szMod = 0.5, pch = 20, labelPoints = F, ...){
   exceedsY <- ((-log10(DDSresult$pvalue) < xyLim[3]) |
                           (-log10(DDSresult$pvalue) > xyLim[4]))
   #set NA's to false
-  exceedsX[is.na(exceedsX)] <- F
-  exceedsY[is.na(exceedsY)] <- F
+  exceedsX[is.na(exceedsX)] <- FALSE
+  exceedsY[is.na(exceedsY)] <- FALSE
 
   if (any(exceedsX) | any(exceedsY)){
     warning("Some of the points overlayed exceed plot margins.

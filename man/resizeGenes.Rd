@@ -18,6 +18,9 @@ resizeGenes(DDSresult, geneLists, sz = lseq(1, 6, length.out =
 
 \item{...}{additional arguments to pass to par.}
 }
+\value{
+no return, plotting side effect
+}
 \description{
 \code{resizeGenes} plot the differentially expressed genes, as specified \cr
 in DDSresult, sized accordingly

@@ -4,6 +4,7 @@
 #'
 #' @param sz an list of sizes to make points
 #' @seealso \link{par}
+#' @return no return, plotting side effect
 #' @examples
 #' sizes <- lseq(0.5, 8, 6)
 #' szPreview(sizes)

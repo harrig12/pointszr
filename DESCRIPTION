@@ -1,7 +1,7 @@
 Package: pointszr
 Type: Package
 Title: Point Resizing for Volcano Plots
-Version: 0.1.0
+Version: 0.2.0
 Author: Cait Harrigan
 Maintainer: Cait Harrigan <cait.harrigan@mail.utoronto.ca>
 Description: pointszr contains methods to easily modify point size 
@@ -23,3 +23,4 @@ Imports:
     DESeq2,
     graphics
 VignetteBuilder: knitr
+biocViews: DifferentialExpression, GeneExpression
