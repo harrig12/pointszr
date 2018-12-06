@@ -17,11 +17,12 @@ This package allows easy creation of volcano plots, and provides functions to hi
 
 ## Usage
 
-pointszr 0.2.0 is compatible with DESeqDataSet objects. Future renditions of this project may allow for a wider variety of cobject classes.
+pointszr 0.2.0 is compatible with DESeqDataSet objects. Future renditions of this project may allow for a wider variety of object classes.
 
-Please see the package vignette for an example workflow.
-Available for download:
+Please see the package vignette for an example workflow. Available for download:
+
 https://drive.google.com/file/d/1CbKvQyLq_iM9bDMKMAa4lskqgiovnxAZ/view?usp=sharing
+
 -----------------------------------------------
 
 Load the package with:
