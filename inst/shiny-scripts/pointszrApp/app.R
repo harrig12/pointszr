@@ -71,9 +71,11 @@ pointszrUI <- fluidPage(
 
       fluidRow(
 
-        # Input: Checkbox whether to invert point selection ----
+        # Input: Checkbox whether to invert point selection and add labels ----
         column(width = 4,
-               checkboxInput("invertSel", "invert point selection", FALSE)),
+               checkboxInput("invertSel", "invert point selection", FALSE),
+               checkboxInput("addLab", "add labels to selected points", FALSE)),
+
 
         # Input: Slider for selected point size
         column(width = 4, sliderInput("pointSz", "selected point size",
@@ -169,11 +171,13 @@ pointszrServer <- function(input, output) {
 
       if (input$invertSel){ #invert the point selection
         sel <- BiocGenerics::subset(res, !(rownames(res) %in% rownames(pointSel())))
-        pointszr::overlay(sel, col=input$pointCol, szMod = input$pointSz)
+        pointszr::overlay(sel, col=input$pointCol, szMod = input$pointSz,
+                          labelPoints = input$addLab)
       }
       else {
         sel <- BiocGenerics::subset(res, rownames(res) %in% rownames(pointSel()))
-        pointszr::overlay(sel, col=input$pointCol, szMod = input$pointSz)
+        pointszr::overlay(sel, col=input$pointCol, szMod = input$pointSz,
+                          labelPoints = input$addLab)
       }
     }
   })
