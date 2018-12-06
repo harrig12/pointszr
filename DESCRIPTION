@@ -1,6 +1,6 @@
 Package: pointszr
 Type: Package
-Title: Point Resizer in R
+Title: Point Resizing for Volcano Plots
 Version: 0.1.0
 Author: Cait Harrigan
 Maintainer: Cait Harrigan <cait.harrigan@mail.utoronto.ca>
@@ -12,10 +12,14 @@ LazyData: true
 Suggests:
     testthat,
     shiny,
-    stats
+    stats,
+    knitr,
+    rmarkdown
 RoxygenNote: 6.1.0
 Imports: 
     BiocGenerics,
+    methods,
     S4Vectors,
     DESeq2,
     graphics
+VignetteBuilder: knitr
