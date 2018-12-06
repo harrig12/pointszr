@@ -1,0 +1,229 @@
+---
+title: "Introduction to `pointszr`"
+author: "Cait Harrigan"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = ">",
+  fig.width=6, fig.height=6
+)
+```
+
+# Point resizing for volcano plots
+
+## Overview
+
+Volcano plots are often used for data exploration in a RNA sequencing experiment. They allow comparison between control and test conditions, highlighing "differential expression". That is, "in what genes is the expression level different in the test and control samples?"... It is common practice to plot log-fold-change in expression against log(p-value), and so the volcano plot is born. 
+
+Traditionally, we can only reasonable compare two conditions, due to plotting limitaitons of. `pointszr` allows more dimentions to be displayed, making use of variation in point size in addition to other parameters, such as point colour. This can be used to improve data exploration and display.
+
+## Liscencing 
+`pointszr` is liscenced under the MIT liscence. If you use `pointszr` published research, please cite:
+
+Harrigan, C. (2018). pointszr. R. Retrieved from https://github.com/harrig12/`pointszr` (Original work published 2018)
+
+## Getting Help
+Create an issue on github https://github.com/harrig12/pointszr/issues 
+
+## Input
+
+`pointszr` works with DESeq result objects. For an in-depth detail of how these objects are created and manipulated, please see the `DESeq2` package vignette:
+```{r eval=FALSE}
+library(DESeq2)
+browseVignettes()
+```
+
+### Subsetting
+
+A useful operation often required in conjunction with `pointszr` is subsetting. The DESeqResutls object is a S4 class. As such `base::subset(<DESeqResults>)` will trow an error. The package author recommends making sure that `BiocGenerics` is attached so that subsetting behaviour is as expected for S4 class objects. In most cases, this is nothing to worry about as `BiocGenerics` will be attached when `DESeq2` is loaded. 
+
+A useful idiom for subsetting is then:
+```{r eval = F}
+BiocGenerics::subset(<DESeqResults>, <subsetting conditions>)
+```
+
+See `?BiocGenerics::subset` for more information
+
+## Getting started with `pointszr` 
+`pointszr` functions have an implicit workflow, the best way to familiarize yourself with their potential is to get an idea of their use in-context, and then expand and explore.
+
+
+```{r, eval=FALSE}
+library(pointszr)
+library(DESeq2)
+```
+```{r, include=FALSE}
+library(pointszr)
+library(DESeq2)
+```
+```{r echo=T}
+#using simulated data provided with package
+summary(simDDS)
+
+#compute DESeq (fit model)
+simDDS <- DESeq(simDDS)
+
+#get results 
+res <- results(simDDS)
+
+#note default reference (A) and test conditions (C)
+attributes(res)$elementMetadata
+```
+
+### Create volcano plot wiht `vplot()`
+```{r echo=T}
+vplot(res)
+```
+
+`poinszr` is useful for creating a volcano plot with little effort, but it really shines when we want to compare multiple experiments on the same axis. The following walk-throught shows two experimental conditions with differential expression compared to the same control condiditon, but we could easily display several test conditions with pairwise control conditions. 
+
+
+### Add to the base plot with `overlay()`
+The idea beind overlay is exactly what it sounds like. We overlay the points of another experiment on top of the volcano plot of the first. Here, we show a case where some subset of the volcano plot is modified, to hilight genes with absolute log-fold-change greater than 1, and a p-value that affords some significance.
+```{r echo=T}
+vplot(res)
+
+# illustrate thresholds of significance
+abline(-log10(0.05), 0, lty = 2, col = 4)
+abline(-log10(0.1), 0, lty = 2, col = 5)
+legend("top", c("0.05", "0.1"), lty = 2, col = 4:5 )
+```
+
+```{r echo=T}
+vplot(res)
+
+# highlight points that meet criteria of interest
+sel1 <- subset( res, abs(res$log2FoldChange) > 0.5 & -log10(res$pvalue) > -log10(0.1) )
+overlay(sel1, col = 4)
+sel05 <- subset( res, abs(res$log2FoldChange) > 0.5 & -log10(res$pvalue) > -log10(0.05) )
+overlay(sel05, col = 5)
+```
+
+Maybe we're intersted in those few extreme points. Let's blow up those points, using the `szMod` argument to `overlay() ` and see what genes those are, setting `lables = TRUE`.
+```{r echo=T}
+vplot(res, ylim = c(0, 4.4), xlim = c(-1.5, 2))
+
+# highlight points that meet criteria of interest
+sel <- subset( res, -log10(res$pvalue) > 2.5 )
+overlay(sel, col = 5, szMod = 2, labelPoints = T)
+```
+
+Neat. Let's remember these genes for later. In a real (non-simulated) experiment this are gene names.
+
+We can do more with `overlay`. For example, let's introduce another test condition.
+
+```{r echo=T}
+#Create result sets with contrasts specified
+resAB <- results(simDDS, contrast = c("condition", "B","A"))
+resAC <- results(simDDS, contrast = c("condition", "C","A"))
+
+#Plot volcano plot for first comparison
+vplot(resAB)
+
+#Overlay volcano plot for second comparison
+overlay(resAC, col = 2)
+legend("top", c("B vs A", "C vs A"), pch = 20, col = 1:2)
+```
+Uh oh! There's a conveinent warning to let us know that the new test condition has points that are not shown because of the plot margins. An easy fix may be to plot resAC first and resAB second, but to be safe, we can just check the largest margins necessary with the function `getPlotLims()`
+
+### Find margin parameters with `getPlotLims()`
+```{r plot1.0, echo = T}
+xWidth <- c(getPlotLims(resAC)$x, getPlotLims(resAB)$x)
+xWidth <- c(min(xWidth), max(xWidth))
+
+yWidth <- c(getPlotLims(resAC)$y, getPlotLims(resAB)$y)
+yWidth <- c(min(yWidth), max(yWidth))
+
+vplot(resAB,
+	  xlim = xWidth,
+	  ylim = yWidth)
+
+overlay(resAC, col = 2)
+legend("top", c("B vs A", "C vs A"), pch = 20, col = 1:2)
+```
+
+Now let's see all the genes with exteme expression change. Be careful to apply the selection vectors (used in `subset()`) to the appropriate experiment!
+
+```{r plot1.1, echo=-(1:9)}
+<<plot1.0>>
+#extreme points under trest condition B
+BextremeSel <- subset(resAB, -log10(resAB$pvalue) > 2.5 )
+overlay(BextremeSel, col = 1, szMod = 2, labelPoints = T)
+
+#and C
+CextremeSel <- subset(resAC, -log10(resAC$pvalue) > 2.5 )
+overlay(CextremeSel, col = 2, szMod = 2, labelPoints = T)
+```
+
+This is a little hard to read, we can play with plotting parameters, or just look at the results objects.
+```{r echo=T}
+rownames(BextremeSel)
+rownames(CextremeSel)
+```
+
+Well these aren't the same genes for both test conditions! Let's go back to the genes we noted before... They're held in `CextremeSel`. What happened to them under condition B? 
+
+```{r plot1.2, echo = -(1:9)}
+<<plot1.0>>
+extCinB <- subset( resAB, rownames(resAB) %in% rownames(CextremeSel) )
+overlay(extCinB, col = 1, szMod = 2, labelPoints = T)
+overlay(CextremeSel, col = 2, szMod = 2, labelPoints = T)
+```
+
+There's a more reader-friendly way to check this, however.
+
+## Resize points by gene name with `resizeGenes()`
+```{r plot1.3, echo = -(1:10)}
+<<plot1.0>>
+overlay(CextremeSel, col = 2, szMod = 2, labelPoints = T)
+resizeGenes(resAB, rownames(CextremeSel), sz = 2, col = 1)
+```
+
+`resizeGenes()` has a lot of interesting potential. For example, say we have some other information about our genes that we'd like to display. `pointszr` is well suited to adding another dimension to the data. Say for example we have some localizaiton data and we want to display whether protein products of genes are primairily expressed in the nucleus, other organelles, or cytoplasm. We've coded these numerically as 1,2,3 (0 for genes without localization information) and have this data available. It's even possible that this data is contained in the metadata of a DESeqDataSet already in use. 
+
+```{r echo = F}
+localizationData <- data.frame( base::sample(c(0,1,2,3), size=1000,
+                                             replace =T, prob = c(0.7, 0.25, 0.04, 0.001))) 
+rownames(localizationData) <- rownames(simDDS)
+colnames(localizationData) <- "localization"
+```
+
+```{r }
+head(localizationData, 10)
+```
+
+```{r echo=-(1:10)}
+<<plot1.0>>
+resizeGenes(resAB, rownames(resAB), sz=localizationData$localization)
+```
+It's hard to see much, but the functions `lseq()` and `szPreview()` come in handy here. What we just plotted used size adjustments ranging from 0 to 3. With `szPreview` we can see that this linear change in size is somewhat hard to percieve, and that logarithmic spacing with a larger maximim size is much better.
+
+```{r}
+#linear spacing
+szPreview(0:3)
+#logarithmic spacing
+szPreview( c(0, lseq(1,4,length.out = 3)) )
+```
+
+```{r echo=-(1:10)}
+<<plot1.0>>
+#create a size modifier for each gene 
+#(add one to localization code to avoid 0 indices)
+localizationData$szMod <- c(0, lseq(1,4,length.out = 3))[localizationData$localization +1]
+resizeGenes(resAB, rownames(resAB), sz=localizationData$szMod)
+resizeGenes(resAC, rownames(resAC), sz=localizationData$szMod, col = 2)
+legend(x = -0.25, y = 3.5, c("nucleus", "other organelles", "cytoplasm"), 
+       pt.cex = lseq(1,4,length.out = 3), pch = 20)
+```
+This still looks a bit messy, so some subsetting of genes of interest, or thresholding of the axes may be desired. 
+
+## Shiny app
+`pointszr` is also supported as a shiny app. Find it online at https://harrig12.shinyapps.io/pointszrApp/ or execute `runPointszrApp.R()` in the console. Please note however, the app is much more limited in functionality than the full `pointszr` package.  
