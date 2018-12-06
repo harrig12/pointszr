@@ -1,1 +1,12 @@
-NEWS
+CHANGES IN VERSION 0.2.0
+-------------------------
+    o Bug fixes
+    o Update to Bioconductor standards (save a few Notes)
+    o Shiny app functionality
+    o Vignette available
+
+CHANGES IN VERSION 0.1.0
+-------------------------
+    o Basic functionality
+    o Example workflow available in README
+    o Up to CRAN standards

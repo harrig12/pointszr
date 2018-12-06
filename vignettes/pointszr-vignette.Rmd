@@ -36,6 +36,7 @@ Create an issue on github https://github.com/harrig12/pointszr/issues
 ## Input
 
 `pointszr` works with DESeq result objects. For an in-depth detail of how these objects are created and manipulated, please see the `DESeq2` package vignette:
+
 ```{r eval=FALSE}
 library(DESeq2)
 browseVignettes()
@@ -79,6 +80,7 @@ attributes(res)$elementMetadata
 ```
 
 ### Create volcano plot wiht `vplot()`
+
 ```{r echo=TRUE}
 vplot(res)
 ```
@@ -88,6 +90,7 @@ vplot(res)
 
 ### Add to the base plot with `overlay()`
 The idea beind overlay is exactly what it sounds like. We overlay the points of another experiment on top of the volcano plot of the first. Here, we show a case where some subset of the volcano plot is modified, to hilight genes with absolute log-fold-change greater than 1, and a p-value that affords some significance.
+
 ```{r echo=TRUE}
 vplot(res)
 
@@ -102,12 +105,13 @@ vplot(res)
 
 # highlight points that meet criteria of interest
 sel1 <- subset( res, abs(res$log2FoldChange) > 0.5 & -log10(res$pvalue) > -log10(0.1) )
-overlay(sel1, col = 4)
+overlay(sel1, col = 5)
 sel05 <- subset( res, abs(res$log2FoldChange) > 0.5 & -log10(res$pvalue) > -log10(0.05) )
-overlay(sel05, col = 5)
+overlay(sel05, col = 4)
 ```
 
 Maybe we're intersted in those few extreme points. Let's blow up those points, using the `szMod` argument to `overlay() ` and see what genes those are, setting `lables = TRUE`.
+
 ```{r echo=TRUE}
 vplot(res, ylim = c(0, 4.4), xlim = c(-1.5, 2))
 
@@ -132,6 +136,7 @@ vplot(resAB)
 overlay(resAC, col = 2)
 legend("top", c("B vs A", "C vs A"), pch = 20, col = 1:2)
 ```
+
 Uh oh! There's a conveinent warning to let us know that the new test condition has points that are not shown because of the plot margins. An easy fix may be to plot resAC first and resAB second, but to be safe, we can just check the largest margins necessary with the function `getPlotLims()`
 
 ### Find margin parameters with `getPlotLims()`
@@ -164,6 +169,7 @@ overlay(CextremeSel, col = 2, szMod = 2, labelPoints = TRUE)
 ```
 
 This is a little hard to read, we can play with plotting parameters, or just look at the results objects.
+
 ```{r echo=TRUE}
 rownames(BextremeSel)
 rownames(CextremeSel)
@@ -205,6 +211,7 @@ head(localizationData, 10)
 <<plot1.0>>
 resizeGenes(resAB, rownames(resAB), sz=localizationData$localization)
 ```
+
 It's hard to see much, but the functions `lseq()` and `szPreview()` come in handy here. What we just plotted used size adjustments ranging from 0 to 3. With `szPreview` we can see that this linear change in size is somewhat hard to percieve, and that logarithmic spacing with a larger maximim size is much better.
 
 ```{r}
@@ -224,6 +231,7 @@ resizeGenes(resAC, rownames(resAC), sz=localizationData$szMod, col = 2)
 legend(x = -0.25, y = 3.5, c("nucleus", "other organelles", "cytoplasm"), 
        pt.cex = lseq(1,4,length.out = 3), pch = 20)
 ```
+
 This still looks a bit messy, so some subsetting of genes of interest, or thresholding of the axes may be desired. 
 
 ## Shiny app
