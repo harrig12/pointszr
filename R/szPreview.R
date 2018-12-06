@@ -11,8 +11,9 @@
 
 szPreview <- function(sz){
   graphics::plot(1:length(sz), ylim = c(-1,1), pch = "",  ylab = "", yaxt = 'n',
-                 xlab = "Index in sz", main = "Point size preview")
+                 xaxt = 'n', xlab = "Index in sz", main = "Point size preview")
   graphics::points(1:length(sz), rep(0, length(sz)), pch = 20, cex = sz)
+  graphics::axis(side = 1, at = seq(0, length(sz), by = 1))
 }
 
 #[END]
