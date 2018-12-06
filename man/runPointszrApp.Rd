@@ -8,5 +8,6 @@ runPointszrApp()
 }
 \description{
 \code{runPointszrApp} launches the shiny app for which the code has been \cr
-placed in \code{./inst/shiny-scripts/pointszrApp/}.
+placed in \code{./inst/shiny-scripts/pointszrApp/}. You can also find it \cr
+online at https://harrig12.shinyapps.io/pointszrApp/
 }
