@@ -4,10 +4,17 @@
 \alias{vplot}
 \title{\code{vplot} create a volcano plot}
 \usage{
-vplot(DDSresult, pch = 20, cex = 0.5, ...)
+vplot(DDSresult, main = "Volcano Plot", xlab = "log2 Fold Change",
+  ylab = "-log10 p-value", pch = 20, cex = 0.5, ...)
 }
 \arguments{
 \item{DDSresult}{a DESeqResults object}
+
+\item{main}{plot title}
+
+\item{xlab}{plot x axis label}
+
+\item{ylab}{plot y axis label}
 
 \item{pch}{point style to be displayed. by default pch = 20.}
 
