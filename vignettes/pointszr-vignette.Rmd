@@ -28,7 +28,7 @@ Traditionally, we can only reasonable compare two conditions, due to plotting li
 ## Liscencing 
 `pointszr` is liscenced under the MIT liscence. If you use `pointszr` published research, please cite:
 
-Harrigan, C. (2018). pointszr. R. Retrieved from https://github.com/harrig12/`pointszr` (Original work published 2018)
+Harrigan, C. (2018). pointszr. R. Retrieved from https://github.com/harrig12/pointszr (Original work published 2018)
 
 ## Getting Help
 Create an issue on github https://github.com/harrig12/pointszr/issues 
