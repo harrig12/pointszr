@@ -1,8 +1,7 @@
 # pointszr
 **Point resizing for volcano plots**
 
-Install the package with:
-    `devtools::install_github("harrig12/pointszr", build_vignettes = TRUE)`
+Install the package with `devtools::install_github("harrig12/pointszr", build_vignettes = TRUE)`
     
 ## Try the app!
 
