@@ -1,11 +1,12 @@
 # pointszr
-
-## Point resizing for volcano plots
+**Point resizing for volcano plots**
 
 Install the package with:
     `devtools::install_github("harrig12/pointszr", build_vignettes = TRUE)`
+    
+## Try the app!
 
------------------------------------------------
+Deployed on [shinyapps.io](https://harrig12.shinyapps.io/pointszrApp/)
 
 ## Description
 
