@@ -1,11 +1,19 @@
 #prepRes.R
 
 #Check file uploaded ----
-req(input$file1)
+if(input$useDemoData){
+  datapath <- system.file("extdata/demodata.csv", package = "pointszr")
+
+}else{
+  datapath <- input$file1$datapath
+
+}
+
+req(datapath)
 
 tryCatch(
   {
-    userDDS <- pointszr:::fileToDESeq2(input$file1$datapath,
+    userDDS <- pointszr:::fileToDESeq2(datapath,
                                        header = input$header,
                                        sep = input$sep)
   },

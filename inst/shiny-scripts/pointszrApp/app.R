@@ -29,6 +29,9 @@ pointszrUI <- fluidPage(
                            "text/comma-separated-values,text/plain",
                            ".csv")),
 
+      # Input: Or use demo data ----
+      checkboxInput("useDemoData", "Use demo data instead of file upload", FALSE),
+
       # Horizontal line ----
       tags$hr(),
 
@@ -118,13 +121,23 @@ pointszrServer <- function(input, output) {
 
   output$contents <- renderTable({
 
-    req(input$file1)
+
+    if(input$useDemoData){
+      datapath <- system.file("extdata/demodata.csv", package = "pointszr")
+
+    }else{
+      datapath <- input$file1$datapath
+
+    }
+
+    req(datapath)
 
     tryCatch({
-      userData <- read.csv(input$file1$datapath,
+
+      userData <- read.csv(datapath,
                            header = input$header,
-                          sep = input$sep,
-                          quote = input$quote)
+                           sep = input$sep,
+                           quote = input$quote)
       },
 
       error = function(e) {
