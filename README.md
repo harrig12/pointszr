@@ -2,6 +2,9 @@
 
 ## Point resizing for volcano plots
 
+Install the package with:
+    `devtools::install_github("harrig12/pointszr", build_vignettes = TRUE)`
+
 -----------------------------------------------
 
 ## Description
@@ -19,13 +22,7 @@ This package allows easy creation of volcano plots, and provides functions to hi
 
 pointszr 0.2.0 is compatible with DESeqDataSet objects. Future renditions of this project may allow for a wider variety of object classes.
 
-Please see the package vignette for an example workflow. Available for download:
-
-https://drive.google.com/file/d/1CbKvQyLq_iM9bDMKMAa4lskqgiovnxAZ/view?usp=sharing
+Please see the package vignette for an example workflow. Load the vignette with `vignette("pointszr-vignette")`
 
 -----------------------------------------------
-
-Load the package with:
-    `devtools::install_github("harrig12/pointszr")`
-
 
